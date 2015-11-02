@@ -1,0 +1,20 @@
+hasher:
+  image: 'metcalfc/dockercoins_hasher:1446066730'
+redis:
+  image: 'redis:latest'
+rng:
+  image: 'metcalfc/dockercoins_rng:1446066730'
+  target_num_containers: 3
+webui:
+  image: 'metcalfc/dockercoins_webui:1446066730'
+  links:
+    - redis
+  ports:
+    - '8000:80'
+worker:
+  image: 'metcalfc/dockercoins_worker:1446066730'
+  links:
+    - hasher
+    - redis
+    - rng
+  target_num_containers: 10
